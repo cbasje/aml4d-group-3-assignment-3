@@ -1,0 +1,8 @@
+*.pyc
+*~
+.idea/
+.DS_Store
+screenlog*
+*.log
+*.swp
+temp/
