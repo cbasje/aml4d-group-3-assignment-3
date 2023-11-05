@@ -1,0 +1,106 @@
+,add_inter,smell_predict_hrs,smell_thr,train_size,test_size,model,look_back_hrs,var_1,var_2,var_3,accuracy,precision,recall,f1,tp,fp,tn,fn
+Unnamed 0,False,8,40,336,168,Decision Tree,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.86,0.19,0.2,0.15,397.0,1288.0,13625.0,986.0
+Unnamed 1,False,8,40,336,168,Decision Tree,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.2,0.22,0.17,444.0,1495.0,13419.0,938.0
+Unnamed 2,False,8,40,336,168,Decision Tree,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.18,0.2,0.15,366.0,1350.0,13567.0,1013.0
+Unnamed 3,False,8,40,336,168,Decision Tree,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.22,0.21,0.17,381.0,1399.0,13522.0,994.0
+Unnamed 4,False,8,40,336,168,Decision Tree,0,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.84,0.18,0.2,0.15,382.0,1595.0,13318.0,1001.0
+Unnamed 5,False,8,40,336,168,Decision Tree,1,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.84,0.18,0.19,0.13,347.0,1645.0,13269.0,1035.0
+Unnamed 6,False,8,40,336,168,Decision Tree,4,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.84,0.19,0.21,0.15,363.0,1615.0,13302.0,1016.0
+Unnamed 7,False,8,40,336,168,Decision Tree,8,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.83,0.18,0.18,0.15,347.0,1681.0,13240.0,1028.0
+8,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 8,False,8,40,336,168,Random Forest,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.2,0.11,0.12,228.0,282.0,14631.0,1155.0
+Unnamed 9,False,8,40,336,168,Random Forest,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.24,0.12,0.14,254.0,342.0,14572.0,1128.0
+Unnamed 10,False,8,40,336,168,Random Forest,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.26,0.16,0.17,293.0,389.0,14528.0,1086.0
+Unnamed 11,False,8,40,336,168,Random Forest,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.21,0.14,0.14,260.0,352.0,14569.0,1115.0
+Unnamed 12,False,8,40,336,168,Random Forest,0,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.91,0.17,0.07,0.08,141.0,277.0,14636.0,1242.0
+Unnamed 13,False,8,40,336,168,Random Forest,1,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.91,0.21,0.1,0.11,196.0,321.0,14593.0,1186.0
+Unnamed 14,False,8,40,336,168,Random Forest,4,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.91,0.21,0.1,0.12,195.0,317.0,14600.0,1184.0
+Unnamed 15,False,8,40,336,168,Random Forest,8,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.91,0.2,0.09,0.11,181.0,343.0,14578.0,1194.0
+17,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 16,False,8,40,11732,3352,Decision Tree,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.88,0.24,0.21,0.23,60.0,185.0,2885.0,222.0
+Unnamed 17,False,8,40,11732,3352,Decision Tree,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.88,0.26,0.23,0.24,66.0,191.0,2879.0,216.0
+Unnamed 18,False,8,40,11732,3352,Decision Tree,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.89,0.34,0.28,0.31,79.0,152.0,2918.0,203.0
+Unnamed 19,False,8,40,11732,3352,Decision Tree,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.88,0.31,0.32,0.31,90.0,202.0,2868.0,192.0
+Unnamed 20,False,8,40,11732,3352,Decision Tree,0,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.87,0.25,0.29,0.27,82.0,250.0,2820.0,200.0
+Unnamed 21,False,8,40,11732,3352,Decision Tree,1,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.87,0.29,0.34,0.31,96.0,238.0,2832.0,186.0
+Unnamed 22,False,8,40,11732,3352,Decision Tree,4,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.87,0.26,0.28,0.27,79.0,222.0,2848.0,203.0
+Unnamed 23,False,8,40,11732,3352,Decision Tree,8,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.88,0.29,0.27,0.28,75.0,188.0,2882.0,207.0
+26,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 24,False,8,40,11732,3352,Random Forest,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.4,0.12,0.19,34.0,50.0,3020.0,248.0
+Unnamed 25,False,8,40,11732,3352,Random Forest,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.44,0.14,0.22,40.0,50.0,3020.0,242.0
+Unnamed 26,False,8,40,11732,3352,Random Forest,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.47,0.13,0.2,37.0,42.0,3028.0,245.0
+Unnamed 27,False,8,40,11732,3352,Random Forest,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.54,0.17,0.26,49.0,42.0,3028.0,233.0
+Unnamed 28,False,8,40,11732,3352,Random Forest,0,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.92,0.51,0.13,0.21,38.0,37.0,3033.0,244.0
+Unnamed 29,False,8,40,11732,3352,Random Forest,1,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.92,0.57,0.19,0.28,53.0,40.0,3030.0,229.0
+Unnamed 30,False,8,40,11732,3352,Random Forest,4,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.92,0.59,0.17,0.26,48.0,33.0,3037.0,234.0
+Unnamed 31,False,8,40,11732,3352,Random Forest,8,Wind Direction,Sulphur dioxide,Hydrogen sulphide,0.92,0.6,0.18,0.27,50.0,33.0,3037.0,232.0
+35,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 32,False,8,40,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.51,0.17,0.26,48.0,46.0,3024.0,234.0
+Unnamed 33,False,8,40,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.53,0.22,0.31,62.0,56.0,3014.0,220.0
+Unnamed 34,False,8,40,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.42,0.3,0.35,84.0,115.0,2955.0,198.0
+Unnamed 35,False,8,40,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.45,0.3,0.36,85.0,102.0,2968.0,197.0
+40,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 36,False,12,40,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.86,0.5,0.26,0.34,120.0,122.0,2760.0,350.0
+Unnamed 37,False,12,40,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.86,0.5,0.19,0.27,87.0,87.0,2795.0,383.0
+Unnamed 38,False,12,40,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.86,0.49,0.25,0.33,117.0,120.0,2762.0,353.0
+Unnamed 39,False,12,40,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.84,0.42,0.31,0.36,147.0,199.0,2683.0,323.0
+45,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 40,False,24,40,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.67,0.48,0.32,0.38,341.0,370.0,1921.0,720.0
+Unnamed 41,False,24,40,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.7,0.59,0.23,0.33,244.0,172.0,2118.0,818.0
+Unnamed 42,False,24,40,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.7,0.55,0.34,0.42,367.0,302.0,1985.0,698.0
+Unnamed 43,False,24,40,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.68,0.5,0.42,0.46,446.0,444.0,1839.0,623.0
+50,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 44,False,8,100,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.42,0.12,0.19,17.0,23.0,3193.0,119.0
+Unnamed 45,False,8,100,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.47,0.1,0.17,14.0,16.0,3200.0,122.0
+Unnamed 46,False,8,100,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.5,0.22,0.31,30.0,30.0,3186.0,106.0
+Unnamed 47,False,8,100,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.55,0.15,0.24,21.0,17.0,3199.0,115.0
+55,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 48,False,12,100,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.94,0.48,0.06,0.11,14.0,15.0,3121.0,202.0
+Unnamed 49,False,12,100,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.94,0.58,0.16,0.25,34.0,25.0,3111.0,182.0
+Unnamed 50,False,12,100,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.93,0.43,0.16,0.23,35.0,47.0,3089.0,181.0
+Unnamed 51,False,12,100,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.93,0.48,0.16,0.24,34.0,37.0,3099.0,182.0
+60,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 52,False,24,100,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.86,0.48,0.06,0.11,29.0,32.0,2843.0,448.0
+Unnamed 53,False,24,100,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.86,0.46,0.1,0.16,46.0,53.0,2822.0,431.0
+Unnamed 54,False,24,100,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.83,0.33,0.16,0.21,74.0,151.0,2724.0,403.0
+Unnamed 55,False,24,100,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.83,0.3,0.13,0.18,61.0,142.0,2733.0,416.0
+65,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 56,True,8,40,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.53,0.27,0.36,77.0,68.0,3002.0,205.0
+Unnamed 57,True,8,40,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.43,0.22,0.29,62.0,82.0,2988.0,220.0
+Unnamed 58,True,8,40,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.41,0.24,0.3,68.0,96.0,2974.0,214.0
+Unnamed 59,True,8,40,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.91,0.41,0.25,0.31,71.0,101.0,2969.0,211.0
+70,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 60,True,12,40,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.44,0.29,0.35,135.0,172.0,2710.0,335.0
+Unnamed 61,True,12,40,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.45,0.25,0.32,119.0,144.0,2738.0,351.0
+Unnamed 62,True,12,40,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.46,0.3,0.36,142.0,168.0,2714.0,328.0
+Unnamed 63,True,12,40,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.42,0.25,0.32,118.0,161.0,2721.0,352.0
+75,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 64,True,24,40,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.7,0.54,0.26,0.35,275.0,236.0,2055.0,786.0
+Unnamed 65,True,24,40,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.69,0.52,0.25,0.34,267.0,247.0,2043.0,795.0
+Unnamed 66,True,24,40,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.71,0.59,0.27,0.37,284.0,200.0,2087.0,781.0
+Unnamed 67,True,24,40,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.66,0.46,0.27,0.34,289.0,343.0,1940.0,780.0
+80,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 68,True,8,100,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.45,0.1,0.16,13.0,16.0,3200.0,123.0
+Unnamed 69,True,8,100,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.46,0.12,0.19,16.0,19.0,3197.0,120.0
+Unnamed 70,True,8,100,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.56,0.14,0.22,19.0,15.0,3201.0,117.0
+Unnamed 71,True,8,100,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.96,0.47,0.21,0.29,29.0,33.0,3183.0,107.0
+85,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 72,True,12,100,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.94,0.53,0.04,0.07,8.0,7.0,3129.0,208.0
+Unnamed 73,True,12,100,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.93,0.36,0.09,0.15,20.0,36.0,3100.0,196.0
+Unnamed 74,True,12,100,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.93,0.47,0.19,0.27,40.0,45.0,3091.0,176.0
+Unnamed 75,True,12,100,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.93,0.38,0.19,0.25,41.0,67.0,3069.0,175.0
+90,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 76,True,24,100,11732,3352,MLPClassifier,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.42,0.09,0.15,44.0,62.0,2813.0,433.0
+Unnamed 77,True,24,100,11732,3352,MLPClassifier,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.34,0.08,0.13,37.0,73.0,2802.0,440.0
+Unnamed 78,True,24,100,11732,3352,MLPClassifier,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.85,0.42,0.14,0.22,69.0,94.0,2781.0,408.0
+Unnamed 79,True,24,100,11732,3352,MLPClassifier,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.82,0.28,0.18,0.22,88.0,227.0,2648.0,389.0
+95,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 80,False,8,40,11732,3352,Stochastic Gradient Descent,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.63,0.13,0.21,36.0,21.0,3049.0,246.0
+Unnamed 81,False,8,40,11732,3352,Stochastic Gradient Descent,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.56,0.2,0.29,55.0,44.0,3026.0,227.0
+Unnamed 82,False,8,40,11732,3352,Stochastic Gradient Descent,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.84,0.29,0.62,0.4,174.0,425.0,2645.0,108.0
+Unnamed 83,False,8,40,11732,3352,Stochastic Gradient Descent,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.65,0.17,0.27,49.0,26.0,3044.0,233.0
+100,0,0,0,0,0,0,0,0,0,0,0.0,0.0,0.0,0.0,,,,
+Unnamed 84,False,8,40,11732,3352,Support Vector Machines,0,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.55,0.08,0.14,22.0,18.0,3052.0,260.0
+Unnamed 85,False,8,40,11732,3352,Support Vector Machines,1,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.52,0.32,0.4,91.0,85.0,2985.0,191.0
+Unnamed 86,False,8,40,11732,3352,Support Vector Machines,4,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.58,0.15,0.24,42.0,31.0,3039.0,240.0
+Unnamed 87,False,8,40,11732,3352,Support Vector Machines,8,Wind speed,Sulphur dioxide,Hydrogen sulphide,0.92,0.55,0.18,0.27,51.0,41.0,3029.0,231.0
