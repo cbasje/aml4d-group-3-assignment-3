@@ -656,18 +656,31 @@ def scorer(clf, X, y):
     }
 
 
-def printScores(cv_results):
-    """Print the cross-validation results"""
+def calculateScores(cv_results):
+    scores = {
+        "f1": round(np.mean(cv_results["test_f1"]), 2),
+        "precision": round(np.mean(cv_results["test_precision"]), 2),
+        "recall": round(np.mean(cv_results["test_recall"]), 2),
+        "accuracy": round(np.mean(cv_results["test_accuracy"]), 2),
+        "tp": np.sum(cv_results["test_tp"]),
+        "fp": np.sum(cv_results["test_fp"]),
+        "tn": np.sum(cv_results["test_tn"]),
+        "fn": np.sum(cv_results["test_fn"]),
+    }
+
+    # Print the cross-validation results
     print("\n================================================")
-    print("average f1-score:", round(np.mean(cv_results["test_f1"]), 2))
-    print("average precision:", round(np.mean(cv_results["test_precision"]), 2))
-    print("average recall:", round(np.mean(cv_results["test_recall"]), 2))
-    print("average accuracy:", round(np.mean(cv_results["test_accuracy"]), 2))
-    print("number of true positives:", np.sum(cv_results["test_tp"]))
-    print("number of false positives:", np.sum(cv_results["test_fp"]))
-    print("number of true negatives:", np.sum(cv_results["test_tn"]))
-    print("number of false negatives:", np.sum(cv_results["test_fn"]))
+    print("average f1-score:", scores["f1"])
+    print("average precision:", scores["precision"])
+    print("average recall:", scores["recall"])
+    print("average accuracy:", scores["accuracy"])
+    print("number of true positives:", scores["tp"])
+    print("number of false positives:", scores["fp"])
+    print("number of true negatives:", scores["tn"])
+    print("number of false negatives:", scores["fn"])
     print("================================================\n")
+
+    return scores
 
 
 def computeFeatureImportance(df_X, df_Y, model=None, scoring=None):
