@@ -9,7 +9,26 @@ from util import log, checkAndCreateDir, isDatetimeObjTzAware
 import pytz
 
 
-def computeFeatures(df_esdr=None, df_smell=None, in_p=None, out_p=None, out_p_mean=None, out_p_std=None, is_regr=False, f_hr=8, b_hr=3, thr=40, add_roll=False, add_diff=False, add_inter=False, add_sqa=False, in_p_mean=None, in_p_std=None, aggr_axis=True, logger=None):
+def computeFeatures(
+    df_esdr=None,
+    df_smell=None,
+    in_p=None,
+    out_p=None,
+    out_p_mean=None,
+    out_p_std=None,
+    is_regr=False,
+    f_hr=8,
+    b_hr=3,
+    thr=40,
+    add_roll=False,
+    add_diff=False,
+    add_inter=False,
+    add_sqa=False,
+    in_p_mean=None,
+    in_p_std=None,
+    aggr_axis=True,
+    logger=None,
+):
     """
     Compute both features (X) and responses (Y) to fit a model F where Y=F(X)
 
@@ -67,15 +86,19 @@ def computeFeatures(df_esdr=None, df_smell=None, in_p=None, out_p=None, out_p_me
     if isDatetimeObjTzAware(df_esdr.index):
         df_esdr.index = df_esdr.index.tz_convert(pytz.timezone("US/Eastern"))
     else:
-        df_esdr.index = df_esdr.index.tz_localize(pytz.utc, ambiguous="infer").tz_convert(pytz.timezone("US/Eastern"))
+        df_esdr.index = df_esdr.index.tz_localize(
+            pytz.utc, ambiguous="infer"
+        ).tz_convert(pytz.timezone("US/Eastern"))
     if df_smell is not None:
         if isDatetimeObjTzAware(df_smell.index):
             df_smell.index = df_smell.index.tz_convert(pytz.timezone("US/Eastern"))
         else:
-            df_smell.index = df_smell.index.tz_localize(pytz.utc, ambiguous="infer").tz_convert(pytz.timezone("US/Eastern"))
+            df_smell.index = df_smell.index.tz_localize(
+                pytz.utc, ambiguous="infer"
+            ).tz_convert(pytz.timezone("US/Eastern"))
 
     # Replace -1 values in esdr data to NaN
-    df_esdr[df_esdr==-1] = np.nan
+    df_esdr[df_esdr == -1] = np.nan
 
     # Convert degrees in wind direction to (cos(direction), sin(direction))
     df_esdr = convertWindDirection(df_esdr)
@@ -83,7 +106,7 @@ def computeFeatures(df_esdr=None, df_smell=None, in_p=None, out_p=None, out_p_me
     # Extract features (X) from ESDR data
     # For models that do not have time-series structure, we want to add time-series features
     df_X = extractFeatures(df_esdr, b_hr, add_inter, add_roll, add_diff, add_sqa)
-    df_X[df_X < 1e-6] = 0 # prevent extreme small values
+    df_X[df_X < 1e-6] = 0  # prevent extreme small values
 
     # Transform features
     if in_p_mean is not None and in_p_std is not None:
@@ -104,18 +127,38 @@ def computeFeatures(df_esdr=None, df_smell=None, in_p=None, out_p=None, out_p_me
 
     # Extract responses from smell data
     if df_smell is not None:
-        bins = None if is_regr else [-np.inf, thr, np.inf] # bin smell reports into labels or not
+        bins = (
+            None if is_regr else [-np.inf, thr, np.inf]
+        )  # bin smell reports into labels or not
         labels = None if is_regr else [0, 1]
         df_Y = extractSmellResponse(df_smell, f_hr, bins, labels, aggr_axis=aggr_axis)
         if df_Y is not None:
             df_Y = df_Y.reset_index()
             # Sync DateTime column in esdr and smell data
-            df_Y = pd.merge_ordered(df_X["DateTime"].to_frame(), df_Y, on="DateTime", how="inner", fill_method=None)
-            df_X = pd.merge_ordered(df_Y["DateTime"].to_frame(), df_X, on="DateTime", how="inner", fill_method=None)
+            df_Y = pd.merge_ordered(
+                df_X["DateTime"].to_frame(),
+                df_Y,
+                on="DateTime",
+                how="inner",
+                fill_method=None,
+            )
+            df_X = pd.merge_ordered(
+                df_Y["DateTime"].to_frame(),
+                df_X,
+                on="DateTime",
+                how="inner",
+                fill_method=None,
+            )
         # Extract crowd features (total smell values for the previous hour)
         df_C = extractSmellResponse(df_smell, None, None, None, aggr_axis=aggr_axis)
         df_C = df_C.reset_index()
-        df_C = pd.merge_ordered(df_X["DateTime"].to_frame(), df_C, on="DateTime", how="inner", fill_method=None)
+        df_C = pd.merge_ordered(
+            df_X["DateTime"].to_frame(),
+            df_C,
+            on="DateTime",
+            how="inner",
+            fill_method=None,
+        )
 
     # drop datetime
     df_X = df_X.drop("DateTime", axis=1)
@@ -129,7 +172,8 @@ def computeFeatures(df_esdr=None, df_smell=None, in_p=None, out_p=None, out_p_me
 
     # Write dataframe into a csv file
     if out_p:
-        for p in out_p: checkAndCreateDir(p)
+        for p in out_p:
+            checkAndCreateDir(p)
         if out_p is not None and len(out_p) > 0:
             df_X.to_csv(out_p[0], index=False)
             log("Features created at " + out_p[0], logger)
@@ -164,11 +208,12 @@ def extractFeatures(df, b_hr, add_inter, add_roll, add_diff, add_sqa):
         if add_diff:
             # Add differential feature
             df_previous_diff = df_diff.shift(bh - 1).copy(deep=True)
-            df_previous_diff.columns += "_Diff" + str(bh-1) + "&" + str(bh)
+            df_previous_diff.columns += "_Diff" + str(bh - 1) + "&" + str(bh)
             df_all.append(df_previous_diff)
         if add_roll:
             # Perform rolling mean and max (data is already resampled by hour)
-            if bh <= 1: continue
+            if bh <= 1:
+                continue
             df_roll = df.rolling(bh, min_periods=1)
             df_roll_max = df_roll.max()
             df_roll_mean = df_roll.mean()
@@ -178,7 +223,7 @@ def extractFeatures(df, b_hr, add_inter, add_roll, add_diff, add_sqa):
             df_all.append(df_roll_mean)
 
     # Combine dataframes
-    #df.columns += ".Now"
+    # df.columns += ".Now"
     df_feat = df
     for d in df_all:
         df_feat = df_feat.join(d)
@@ -205,7 +250,7 @@ def extractFeatures(df, b_hr, add_inter, add_roll, add_diff, add_sqa):
         for i in range(0, L):
             c1 = df_feat.columns[i]
             c = c1 + "_sqare"
-            df_sqa[c] = df_feat[c1]**2
+            df_sqa[c] = df_feat[c1] ** 2
 
     # Merge dataframes
     if add_inter:
@@ -221,18 +266,21 @@ def extractSmellResponse(df, f_hr, bins, labels, aggr_axis=False):
 
     # Compute the total smell_values in future f_hr hours
     if f_hr is not None:
-        df_resp = df_resp.rolling(f_hr, min_periods=1).sum().shift(-1*f_hr)
+        df_resp = df_resp.rolling(f_hr, min_periods=1).sum().shift(-1 * f_hr)
         # Remove the last f_hr rows
-        df_resp = df_resp.iloc[:-1*f_hr]
+        df_resp = df_resp.iloc[: -1 * f_hr]
 
     # Bin smell values for classification
-    if aggr_axis: df_resp = df_resp.sum(axis=1)
+    if aggr_axis:
+        df_resp = df_resp.sum(axis=1)
     if bins is not None and labels is not None:
         df_resp = pd.cut(df_resp, bins, labels=labels, right=False)
-    if aggr_axis: df_resp.name = "smell"
+    if aggr_axis:
+        df_resp.name = "smell"
 
     # Sanity check
-    if len(df_resp) == 0: df_resp = None
+    if len(df_resp) == 0:
+        df_resp = None
 
     return df_resp
 

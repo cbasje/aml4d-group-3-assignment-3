@@ -9,7 +9,9 @@ import re
 from sklearn.feature_extraction.text import CountVectorizer
 
 
-def preprocessData(df_esdr_array_raw=None, df_smell_raw=None, in_p=None, out_p=None, logger=None):
+def preprocessData(
+    df_esdr_array_raw=None, df_smell_raw=None, in_p=None, out_p=None, logger=None
+):
     """
     Preprocess data
 
@@ -31,7 +33,9 @@ def preprocessData(df_esdr_array_raw=None, df_smell_raw=None, in_p=None, out_p=N
             df_esdr_array_raw = []
             for f in getAllFileNamesInFolder(in_p[0]):
                 if ".csv" in f:
-                    df_esdr_array_raw.append(pd.read_csv(in_p[0] + f, index_col="EpochTime"))
+                    df_esdr_array_raw.append(
+                        pd.read_csv(in_p[0] + f, index_col="EpochTime")
+                    )
             df_smell_raw = pd.read_csv(in_p[1], index_col="EpochTime")
         else:
             if df_esdr_array_raw is None:
@@ -46,12 +50,19 @@ def preprocessData(df_esdr_array_raw=None, df_smell_raw=None, in_p=None, out_p=N
 
     # Sync DateTime column in esdr and smell data
     if df_smell is not None:
-        df_smell = pd.merge_ordered(df_esdr["DateTime"].to_frame(), df_smell, on="DateTime", how="left", fill_method=None)
+        df_smell = pd.merge_ordered(
+            df_esdr["DateTime"].to_frame(),
+            df_smell,
+            on="DateTime",
+            how="left",
+            fill_method=None,
+        )
         df_smell = df_smell.fillna(0)
 
     # Check directory and save file
     if out_p is not None:
-        for p in out_p: checkAndCreateDir(p)
+        for p in out_p:
+            checkAndCreateDir(p)
         df_esdr.to_csv(out_p[0], index=False)
         df_smell.to_csv(out_p[1], index=False)
         log("ESDR data created at " + out_p[0], logger)
@@ -63,8 +74,13 @@ def mergeEsdrData(data):
     # Resample data
     df = resampleData(data.pop(0), method="mean").reset_index()
     while len(data) != 0:
-        df = pd.merge_ordered(df, resampleData(data.pop(0), method="mean").reset_index(),
-            on="DateTime", how="outer", fill_method=None)
+        df = pd.merge_ordered(
+            df,
+            resampleData(data.pop(0), method="mean").reset_index(),
+            on="DateTime",
+            how="outer",
+            fill_method=None,
+        )
 
     # Fill NaN with -1
     df = df.fillna(-1)
@@ -72,20 +88,21 @@ def mergeEsdrData(data):
 
 
 def aggregateSmellData(df):
-    if df is None: return None
+    if df is None:
+        return None
 
     # Bag of words
-    #bow = bagOfWords(df["smell_description"])
+    # bow = bagOfWords(df["smell_description"])
 
     # Select only the reports that are related to industrial smell
-    #keywords_exclude = [
+    # keywords_exclude = [
     #    "car","Car","trash","Trash","vehicle","Vehicle","paint",
     #    "Paint","garbage","Garbage","sewer","Sewer","sewage","Sewage"]
-    #select_smell = ~df["smell_description"].str.contains("|".join(keywords_exclude)).fillna(False)
-    #df = df[select_smell]
+    # select_smell = ~df["smell_description"].str.contains("|".join(keywords_exclude)).fillna(False)
+    # df = df[select_smell]
 
     # Select only the reports within the range of 3 and 5
-    df = df[(df["smell_value"]>=3)&(df["smell_value"]<=5)]
+    df = df[(df["smell_value"] >= 3) & (df["smell_value"] <= 5)]
 
     # If empty, return None
     if df.empty:
@@ -106,7 +123,9 @@ def aggregateSmellData(df):
     # Merge all
     df = data.pop(0).reset_index()
     while len(data) != 0:
-        df = pd.merge_ordered(df, data.pop(0).reset_index(), on="DateTime", how="outer", fill_method=None)
+        df = pd.merge_ordered(
+            df, data.pop(0).reset_index(), on="DateTime", how="outer", fill_method=None
+        )
 
     # Fill NaN with 0
     df = df.fillna(0)
@@ -132,9 +151,9 @@ def resampleData(df, method="mean", rule="60Min"):
 def bagOfWords(df):
     # Preprocessing
     line = " ".join(df.fillna(""))
-    line = re.sub("[^a-zA-Z]", " ", line) # replace non-letters
-    line = re.sub("[ ]+", " ", line) # replace multiple white space
-    line = [line.lower()] # to lower case
+    line = re.sub("[^a-zA-Z]", " ", line)  # replace non-letters
+    line = re.sub("[ ]+", " ", line)  # replace multiple white space
+    line = [line.lower()]  # to lower case
 
     # Bag of words
     model = CountVectorizer(stop_words="english")

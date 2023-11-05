@@ -22,17 +22,24 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.inspection import permutation_importance
 
 
-def generateLogger(file_name, log_level=logging.INFO, name=str(uuid.uuid4()), format="%(asctime)s %(levelname)s %(message)s"):
+def generateLogger(
+    file_name,
+    log_level=logging.INFO,
+    name=str(uuid.uuid4()),
+    format="%(asctime)s %(levelname)s %(message)s",
+):
     """Generate a logger for loggin files"""
-    if log_level == "debug": log_level = logging.DEBUG
+    if log_level == "debug":
+        log_level = logging.DEBUG
     checkAndCreateDir(file_name)
     formatter = logging.Formatter(format)
-    #handler = logging.FileHandler(file_name, mode="w") # mode "w" is for overriding file
+    # handler = logging.FileHandler(file_name, mode="w") # mode "w" is for overriding file
     handler = logging.FileHandler(file_name, mode="a")
     handler.setFormatter(formatter)
     logger = logging.getLogger(name)
     logger.setLevel(log_level)
-    for hdlr in logger.handlers[:]: logger.removeHandler(hdlr) # remove old handlers
+    for hdlr in logger.handlers[:]:
+        logger.removeHandler(hdlr)  # remove old handlers
     logger.addHandler(handler)
     return logger
 
@@ -60,7 +67,7 @@ def isFileHere(path):
 
 def getAllFileNamesInFolder(path):
     """Return a list of all files in a folder"""
-    return  [f for f in listdir(path) if isfile(join(path, f))]
+    return [f for f in listdir(path) if isfile(join(path, f))]
 
 
 def esdrRootUrl():
@@ -123,7 +130,9 @@ def evalEventDetection(Y_true, Y_pred, thr=40, h=1, round_to_decimal=3):
         false negative: for each t in T, if there is no p in P that overlaps with it
     """
     # Convert Y_true and Y_pred into binary signals and to intervals
-    Y_true_iv, Y_pred_iv = binary2Interval(Y_true>=thr), binary2Interval(Y_pred>=thr)
+    Y_true_iv, Y_pred_iv = binary2Interval(Y_true >= thr), binary2Interval(
+        Y_pred >= thr
+    )
 
     # Merge intervals
     Y_true_iv, Y_pred_iv = mergeInterval(Y_true_iv, h=h), mergeInterval(Y_pred_iv, h=h)
@@ -135,15 +144,17 @@ def evalEventDetection(Y_true, Y_pred, thr=40, h=1, round_to_decimal=3):
         has_overlap = False
         for p in Y_pred_iv:
             # find overlaps (four possible cases)
-            c1 = t[0]<=p[0]<=t[1] and t[0]<=p[1]<=t[1]
-            c2 = p[0]<t[0] and t[0]<=p[1]<=t[1]
-            c3 = t[0]<=p[0]<=t[1] and p[1]>t[1]
-            c4 = p[0]<t[0] and p[1]>t[1]
+            c1 = t[0] <= p[0] <= t[1] and t[0] <= p[1] <= t[1]
+            c2 = p[0] < t[0] and t[0] <= p[1] <= t[1]
+            c3 = t[0] <= p[0] <= t[1] and p[1] > t[1]
+            c4 = p[0] < t[0] and p[1] > t[1]
             if c1 or c2 or c3 or c4:
                 has_overlap = True
                 break
-        if has_overlap: TP += 1
-        else: FN += 1
+        if has_overlap:
+            TP += 1
+        else:
+            FN += 1
 
     # Compute false positive
     FP = 0
@@ -151,30 +162,44 @@ def evalEventDetection(Y_true, Y_pred, thr=40, h=1, round_to_decimal=3):
         has_overlap = False
         for t in Y_true_iv:
             # find overlaps (four possible cases)
-            c1 = p[0]<=t[0]<=p[1] and p[0]<=t[1]<=p[1]
-            c2 = t[0]<p[0] and p[0]<=t[1]<=p[1]
-            c3 = p[0]<=t[0]<=p[1] and t[1]>p[1]
-            c4 = t[0]<p[0] and t[1]>p[1]
+            c1 = p[0] <= t[0] <= p[1] and p[0] <= t[1] <= p[1]
+            c2 = t[0] < p[0] and p[0] <= t[1] <= p[1]
+            c3 = p[0] <= t[0] <= p[1] and t[1] > p[1]
+            c4 = t[0] < p[0] and t[1] > p[1]
             if c1 or c2 or c3 or c4:
                 has_overlap = True
                 break
-        if not has_overlap: FP += 1
+        if not has_overlap:
+            FP += 1
 
     # Compute precision, recall, f-score
     TP, FN, FP = float(TP), float(FN), float(FP)
-    if TP + FP == 0: precision = 0
-    else: precision = TP / (TP + FP)
-    if TP + FN == 0: recall = 0
-    else: recall = TP / (TP + FN)
-    if precision + recall == 0: f_score = 0
-    else: f_score = 2 * (precision * recall) / (precision + recall)
+    if TP + FP == 0:
+        precision = 0
+    else:
+        precision = TP / (TP + FP)
+    if TP + FN == 0:
+        recall = 0
+    else:
+        recall = TP / (TP + FN)
+    if precision + recall == 0:
+        f_score = 0
+    else:
+        f_score = 2 * (precision * recall) / (precision + recall)
 
     # Round to
     precision = round(precision, round_to_decimal)
     recall = round(recall, round_to_decimal)
     f_score = round(f_score, round_to_decimal)
 
-    return {"TP":TP, "FP":FP, "FN":FN, "precision":precision, "recall":recall, "f_score":f_score}
+    return {
+        "TP": TP,
+        "FP": FP,
+        "FN": FN,
+        "precision": precision,
+        "recall": recall,
+        "f_score": f_score,
+    }
 
 
 def mergeInterval(intervals, h=1):
@@ -204,7 +229,7 @@ def binary2Interval(Y):
     input = [False, True, True, False, True, False]
     output = [[1,2], [4,4]]
     """
-    Y_cp = np.append(Y, False) # this is important for case like [False, True, True]
+    Y_cp = np.append(Y, False)  # this is important for case like [False, True, True]
     intervals = []
     current_iv = None
     for i in range(0, len(Y_cp)):
@@ -217,8 +242,17 @@ def binary2Interval(Y):
     return intervals
 
 
-def computeMetric(Y_true, Y_pred, is_regr, flatten=False, simple=False,
-        round_to_decimal=3, aggr_axis=False, only_binary=True, event_thr=40):
+def computeMetric(
+    Y_true,
+    Y_pred,
+    is_regr,
+    flatten=False,
+    simple=False,
+    round_to_decimal=3,
+    aggr_axis=False,
+    only_binary=True,
+    event_thr=40,
+):
     """
     Compute the evaluation result of regression or classification Y=F(X)
     INPUTS:
@@ -233,15 +267,17 @@ def computeMetric(Y_true, Y_pred, is_regr, flatten=False, simple=False,
     - cm: confusion matrix (for classification) in pandas dataframe format
     """
     Y_true, Y_pred = deepcopy(Y_true), deepcopy(Y_pred)
-    if len(Y_true.shape) > 2: Y_true = np.reshape(Y_true, (Y_true.shape[0], -1))
-    if len(Y_pred.shape) > 2: Y_pred = np.reshape(Y_pred, (Y_pred.shape[0], -1))
+    if len(Y_true.shape) > 2:
+        Y_true = np.reshape(Y_true, (Y_true.shape[0], -1))
+    if len(Y_pred.shape) > 2:
+        Y_pred = np.reshape(Y_pred, (Y_pred.shape[0], -1))
     if aggr_axis and is_regr:
         if len(Y_true.shape) > 1:
             Y_true = np.sum(Y_true, axis=1)
         if len(Y_pred.shape) > 1:
             Y_pred = np.sum(Y_pred, axis=1)
     if only_binary and not is_regr:
-        Y_pred[Y_pred>1] = 1
+        Y_pred[Y_pred > 1] = 1
     Y_true_origin, Y_pred_origin = deepcopy(Y_true), deepcopy(Y_pred)
     Y_true, Y_pred = Y_true[~np.isnan(Y_true)], Y_pred[~np.isnan(Y_pred)]
     metric = {}
@@ -263,7 +299,11 @@ def computeMetric(Y_true, Y_pred, is_regr, flatten=False, simple=False,
         prf_avg = precision_recall_fscore_support(Y_true, Y_pred, average="macro")
         prf = []
         idx = []
-        col = ["p", "r", "f", "s"] if simple else ["precision", "recall", "fscore", "support"]
+        col = (
+            ["p", "r", "f", "s"]
+            if simple
+            else ["precision", "recall", "fscore", "support"]
+        )
         for i in range(0, len(prf_class)):
             prf.append(np.append(prf_class[i], prf_avg[i]))
         for i in range(0, len(prf_class[0])):
@@ -277,7 +317,9 @@ def computeMetric(Y_true, Y_pred, is_regr, flatten=False, simple=False,
         df_prf = pd.DataFrame(data=prf, index=np.append(idx, idx_avg), columns=col)
         df_cm = pd.DataFrame(data=cm, index=idx, columns=idx)
         df_cm.index = ("t" + df_cm.index) if simple else ("true_" + df_cm.index)
-        df_cm.columns = ("p" + df_cm.columns) if simple else ("predicted_" + df_cm.columns)
+        df_cm.columns = (
+            ("p" + df_cm.columns) if simple else ("predicted_" + df_cm.columns)
+        )
         metric["prf"] = df_prf
         metric["cm"] = df_cm
         if flatten:
@@ -298,14 +340,15 @@ def evaluateData(Y_true, Y_pred, X, col_names=None):
     OUTPUT:
     - true positives (tp), false positives (fp), true negatives (tn), false negatives(fn)
     """
-    if col_names is None: col_names = map(str, range(0,X.shape[1]))
+    if col_names is None:
+        col_names = map(str, range(0, X.shape[1]))
     Y_true = np.squeeze(Y_true)
     Y_pred = np.squeeze(Y_pred)
     # Get index
-    idx_tp = (Y_true==1)&(Y_pred==1)
-    idx_fp = (Y_true==0)&(Y_pred==1)
-    idx_tn = (Y_true==0)&(Y_pred==0)
-    idx_fn = (Y_true==1)&(Y_pred==0)
+    idx_tp = (Y_true == 1) & (Y_pred == 1)
+    idx_fp = (Y_true == 0) & (Y_pred == 1)
+    idx_tn = (Y_true == 0) & (Y_pred == 0)
+    idx_fn = (Y_true == 1) & (Y_pred == 0)
     # Get X
     X_tp = X[idx_tp]
     X_fp = X[idx_fp]
@@ -321,10 +364,10 @@ def evaluateData(Y_true, Y_pred, X, col_names=None):
     Y_pred_tn = Y_pred[idx_tn]
     Y_pred_fn = Y_pred[idx_fn]
     # Create dataframe
-    data_tp = np.insert(X_tp, 0 , [Y_true_tp, Y_pred_tp], axis=1)
-    data_fp = np.insert(X_fp, 0 , [Y_true_fp, Y_pred_fp], axis=1)
-    data_tn = np.insert(X_tn, 0 , [Y_true_tn, Y_pred_tn], axis=1)
-    data_fn = np.insert(X_fn, 0 , [Y_true_fn, Y_pred_fn], axis=1)
+    data_tp = np.insert(X_tp, 0, [Y_true_tp, Y_pred_tp], axis=1)
+    data_fp = np.insert(X_fp, 0, [Y_true_fp, Y_pred_fp], axis=1)
+    data_tn = np.insert(X_tn, 0, [Y_true_tn, Y_pred_tn], axis=1)
+    data_fn = np.insert(X_fn, 0, [Y_true_fn, Y_pred_fn], axis=1)
     columns = ["Y_true", "Y_pred"] + list(col_names)
     df_tp = pd.DataFrame(data=data_tp, columns=columns)
     df_fp = pd.DataFrame(data=data_fp, columns=columns)
@@ -389,7 +432,7 @@ def getEsdrData(source, **options):
                 df.columns = c
                 df_s.columns = c
                 df = pd.concat([df[~df.index.isin(df_s.index)], df_s])
-        df = df.apply(pd.to_numeric, errors="coerce") # To numeric values
+        df = df.apply(pd.to_numeric, errors="coerce")  # To numeric values
         data.append(df)
 
     # Return
@@ -429,14 +472,23 @@ def getSmellReportsV2(**options):
         return None
 
     # Wrangle text
-    df["smell_description"] = df["smell_description"].replace(np.nan, "").map(removeNonAsciiChars)
-    df["feelings_symptoms"] = df["feelings_symptoms"].replace(np.nan, "").map(removeNonAsciiChars)
-    df["additional_comments"] = df["additional_comments"].replace(np.nan, "").map(removeNonAsciiChars)
+    df["smell_description"] = (
+        df["smell_description"].replace(np.nan, "").map(removeNonAsciiChars)
+    )
+    df["feelings_symptoms"] = (
+        df["feelings_symptoms"].replace(np.nan, "").map(removeNonAsciiChars)
+    )
+    df["additional_comments"] = (
+        df["additional_comments"].replace(np.nan, "").map(removeNonAsciiChars)
+    )
 
     # Set index and drop columns
     df.set_index("observed_at", inplace=True)
     df.index.names = ["EpochTime"]
-    df.rename(columns={"latitude": "skewed_latitude", "longitude": "skewed_longitude"}, inplace=True)
+    df.rename(
+        columns={"latitude": "skewed_latitude", "longitude": "skewed_longitude"},
+        inplace=True,
+    )
     df.drop(["zip_code_id"], axis=1, inplace=True)
 
     # Return
@@ -473,8 +525,12 @@ def getSmellReportsV1(**options):
         return None
 
     # Wrangle text
-    df["smell_description"] = df["smell_description"].replace(np.nan, "").map(removeNonAsciiChars)
-    df["feelings_symptoms"] = df["feelings_symptoms"].replace(np.nan, "").map(removeNonAsciiChars)
+    df["smell_description"] = (
+        df["smell_description"].replace(np.nan, "").map(removeNonAsciiChars)
+    )
+    df["feelings_symptoms"] = (
+        df["feelings_symptoms"].replace(np.nan, "").map(removeNonAsciiChars)
+    )
 
     # Set index and drop columns
     df.set_index("created_at", inplace=True)
@@ -485,20 +541,36 @@ def getSmellReportsV1(**options):
     return df
 
 
-def plotClusterPairGrid(X, Y, out_p, w, h, title, is_Y_continuous,
-    c_ls=((0.5, 0.5, 0.5), (0.2275, 0.298, 0.7529), (0.702, 0.0118, 0.149), (0, 1, 0)), # color
-    c_alpha=(0.1, 0.1, 0.2, 0.1), # color opacity
-    c_bin=(0, 1), # color is mapped to index [Y<c_bin[0], Y==c_bin[0], Y==c_bin[1], Y>c_bin[1]]
-    logger=None):
+def plotClusterPairGrid(
+    X,
+    Y,
+    out_p,
+    w,
+    h,
+    title,
+    is_Y_continuous,
+    c_ls=(
+        (0.5, 0.5, 0.5),
+        (0.2275, 0.298, 0.7529),
+        (0.702, 0.0118, 0.149),
+        (0, 1, 0),
+    ),  # color
+    c_alpha=(0.1, 0.1, 0.2, 0.1),  # color opacity
+    c_bin=(
+        0,
+        1,
+    ),  # color is mapped to index [Y<c_bin[0], Y==c_bin[0], Y==c_bin[1], Y>c_bin[1]]
+    logger=None,
+):
     """
     Plot a grid of scatter plot pairs in X, with point colors representing binary labels
     """
     if not is_Y_continuous:
-        c_idx = [Y<c_bin[0]]
+        c_idx = [Y < c_bin[0]]
         for k in range(0, len(c_bin)):
-            c_idx.append(Y==c_bin[k])
-        c_idx.append(Y>c_bin[-1])
-        if not (len(c_idx)==len(c_ls)==len(c_alpha)):
+            c_idx.append(Y == c_bin[k])
+        c_idx.append(Y > c_bin[-1])
+        if not (len(c_idx) == len(c_ls) == len(c_alpha)):
             log("Parameter sizes does not match.", logger)
             return
 
@@ -507,18 +579,24 @@ def plotClusterPairGrid(X, Y, out_p, w, h, title, is_Y_continuous,
     label_font_size = 16
     tick_font_size = 16
     alpha = 0.3
-    fig = plt.figure(figsize=(6*w, 5*h+1), dpi=150)
+    fig = plt.figure(figsize=(6 * w, 5 * h + 1), dpi=150)
     num_cols = X.shape[1]
     cmap = "coolwarm"
     c = 1
-    for i in range(0, num_cols-1):
-        for j in range(i+1, num_cols):
+    for i in range(0, num_cols - 1):
+        for j in range(i + 1, num_cols):
             plt.subplot(h, w, c)
             if is_Y_continuous:
-                plt.scatter(X[:,i], X[:,j], c=Y, s=dot_size, alpha=alpha, cmap=cmap)
+                plt.scatter(X[:, i], X[:, j], c=Y, s=dot_size, alpha=alpha, cmap=cmap)
             else:
                 for k in range(0, len(c_idx)):
-                    plt.scatter(X[c_idx[k],i], X[c_idx[k],j], c=c_ls[k], s=dot_size, alpha=c_alpha[k])
+                    plt.scatter(
+                        X[c_idx[k], i],
+                        X[c_idx[k], j],
+                        c=c_ls[k],
+                        s=dot_size,
+                        alpha=c_alpha[k],
+                    )
             plt.xlabel("Component " + str(i), fontsize=label_font_size)
             plt.ylabel("Component " + str(j), fontsize=label_font_size)
             plt.xticks(fontsize=tick_font_size)
@@ -550,7 +628,8 @@ def createSplits(test_size, train_size, dataset_size):
     for i in range(train_size, dataset_size, test_size):
         start = i - train_size
         end = i + test_size
-        if (end >= dataset_size): break
+        if end >= dataset_size:
+            break
         train_index = range(start, i)
         test_index = range(i, end)
         cv.append((list(train_index), list(test_index)))
@@ -562,11 +641,19 @@ def scorer(clf, X, y):
     # Make predictions
     y_pred = clf.predict(X)
     # Evaluation metrics
-    c = confusion_matrix(y, y_pred, labels=[0,1])
+    c = confusion_matrix(y, y_pred, labels=[0, 1])
     p = precision_recall_fscore_support(y, y_pred, average="binary", zero_division=0)
     a = accuracy_score(y, y_pred)
-    return {"tn": c[0,0], "fp": c[0,1], "fn": c[1,0], "tp": c[1,1],
-            "precision": p[0], "recall": p[1], "f1": p[2], "accuracy": a}
+    return {
+        "tn": c[0, 0],
+        "fp": c[0, 1],
+        "fn": c[1, 0],
+        "tp": c[1, 1],
+        "precision": p[0],
+        "recall": p[1],
+        "f1": p[2],
+        "accuracy": a,
+    }
 
 
 def printScores(cv_results):
@@ -588,8 +675,9 @@ def computeFeatureImportance(df_X, df_Y, model=None, scoring=None):
         model = RandomForestClassifier(random_state=0)
     print("Computer feature importance using", model)
     model.fit(df_X, df_Y.squeeze())
-    result = permutation_importance(model, df_X, df_Y,
-            n_repeats=10, random_state=0, scoring=scoring)
+    result = permutation_importance(
+        model, df_X, df_Y, n_repeats=10, random_state=0, scoring=scoring
+    )
     feat_names = df_X.columns.copy()
     feat_ims = np.array(result.importances_mean)
     sorted_ims_idx = np.argsort(feat_ims)[::-1]
