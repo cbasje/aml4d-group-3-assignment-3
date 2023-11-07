@@ -1,4 +1,5 @@
-import train_test
+from preprocessData import preprocessData
+from train_test import process_row
 import pandas as pd
 
 
@@ -15,5 +16,13 @@ input_data = (
         }
     )
 )
-df = pd.DataFrame([train_test.main(row) for i, row in input_data.iterrows()])
-df.to_csv("output_data.csv")
+df_sensor, df_smell = preprocessData(
+    in_p=["dataset/esdr_raw/", "dataset/smell_raw.csv"]
+)
+# pretty_print(df_sensor, "Display all sensor data and column names")
+# pretty_print(df_smell, "Display smell data and column names")
+
+results = pd.DataFrame(
+    [process_row(row, df_sensor, df_smell) for i, row in input_data.iterrows()]
+)
+results.to_csv("output_data.csv")

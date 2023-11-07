@@ -1,5 +1,4 @@
 from computeFeatures import computeFeatures
-from preprocessData import preprocessData
 
 from util import scorer
 from util import calculateScores
@@ -11,11 +10,18 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC, LinearSVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import NearestNeighbors
 
 from sklearn.model_selection import cross_validate
 
 import pandas as pd
+
+
+columns = {
+    "Wind speed": "3.feed_28.SONICWS_MPH",
+    "Wind Direction": "3.feed_28.SONICWD_DEG",
+    "Sulphur dioxide": "3.feed_3.SO2_PPM",
+    "Hydrogen sulphide": "3.feed_28.H2S_PPM",
+}
 
 
 def pretty_print(df, message):
@@ -27,31 +33,15 @@ def pretty_print(df, message):
     print("================================================\n")
 
 
-columns = {
-    "Wind speed": "3.feed_28.SONICWS_MPH",
-    "Wind Direction": "3.feed_28.SONICWD_DEG",
-    "Sulphur dioxide": "3.feed_3.SO2_PPM",
-    "Hydrogen sulphide": "3.feed_28.H2S_PPM",
-}
-
-
-def main(row):
-    if not row.get("var_1"):
+def process_row(row, df_sensor, df_smell):
+    if not row.get("model"):
         return row
 
-    df_sensor, df_smell = preprocessData(
-        in_p=["dataset/esdr_raw/", "dataset/smell_raw.csv"]
-    )
-    # pretty_print(df_sensor, "Display all sensor data and column names")
-    # pretty_print(df_smell, "Display smell data and column names")
-
     # Select some variables, which means the columns in the data table.
-    # TODO
-    variables = [row.get("var_1"), row.get("var_2"), row.get("var_3")]
-    wanted_cols = ["DateTime"] + [columns.get(v) for v in variables]
-
-    print(row)
-    df_sensor = df_sensor[wanted_cols]
+    if row.get("var_1"):
+        variables = [row.get("var_1"), row.get("var_2"), row.get("var_3")]
+        wanted_cols = ["DateTime"] + [columns.get(v) for v in variables]
+        df_sensor = df_sensor[wanted_cols]
 
     # pretty_print(df_sensor, "Display selected sensor data and column names")
 
@@ -70,7 +60,6 @@ def main(row):
     splits = createSplits(row.get("test_size"), row.get("train_size"), df_X.shape[0])
 
     # Indicate which model you want to use to predict smell events
-    # TODO: Also "Multi-class classification"?
     if row.get("model") == "Random Forest":
         model = RandomForestClassifier()
     elif row.get("model") == "Support Vector Machines":
@@ -95,7 +84,3 @@ def main(row):
     #              "Display feature importance based on f1-score")
 
     return pd.Series({**row, **scores})
-
-
-if __name__ == "__main__":
-    main()
